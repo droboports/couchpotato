@@ -31,7 +31,7 @@ set -o pipefail # propagate last error code on pipe
 
 # ensure log folder exists
 logfolder="$(dirname ${logfile})"
-[[ ! -d "${logfolder}" ]] && mkdir -p "${logfolder}"
+if [[ ! -d "${logfolder}" ]]; then mkdir -p "${logfolder}"; fi
 
 # redirect all output to logfile
 exec 3>&1 1>> "${logfile}" 2>&1
@@ -49,7 +49,14 @@ _is_running() {
   /sbin/start-stop-daemon -K -s 0 -x "${python}" -p "${pidfile}" -q
 }
 
+_create_config() {
+  if [[ ! -f "${conffile}" ]]; then
+    cp "${conffile}.default" "${conffile}"
+  fi
+}
+
 start() {
+  _create_config
   rm -f "${pidfile}"
   PATH="${prog_dir}/libexec:${DROBOAPPS_DIR}/git/bin:${PATH}" PYTHONPATH="${prog_dir}/lib/python2.7/site-packages" "${python}" "${prog_dir}/app/CouchPotato.py" --data_dir="${prog_dir}/data" --pid_file="${pidfile}" --daemon
 }
