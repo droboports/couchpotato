@@ -1,5 +1,8 @@
 [core]
 port = 8083
+launch_browser = 0
+permission_folder = 0777
+permission_file = 0777
 
 [updater]
 notification = True
