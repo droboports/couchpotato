@@ -7,10 +7,10 @@
 
 framework_version="2.1"
 name="couchpotato"
-version="2.6.3.71"
-description="Internet PVR for movies"
+version="3.0.1"
+description="Download movies automatically, easily and in the best quality as soon as they are available"
 depends="python2"
-webui=":8083/"
+webui="WebUI"
 
 prog_dir="$(dirname "$(realpath "${0}")")"
 daemon="${DROBOAPPS_DIR}/python2/bin/python"
@@ -42,7 +42,6 @@ STDERR=">&4"
 echo "$(date +"%Y-%m-%d %H-%M-%S"):" "${0}" "${@}"
 set -o errexit  # exit on uncaught error code
 set -o nounset  # exit on unset variable
-set -o pipefail # propagate last error code on pipe
 set -o xtrace   # enable script tracing
 
 main "${@}"
